@@ -12,13 +12,49 @@ const token = {
   },
 };
 
-const register = createAsyncThunk(
-  'auth/register',
-  async (credentials, thunkAPI) => {
-    try {
-      const { data } = await axios.post('/users/signup', credentials);
-      token.set(data.token);
+const register = createAsyncThunk('auth/register', async credentials => {
+  try {
+    const { data } = await axios.post('/users/signup', credentials);
+    token.set(data.token);
 
+    return data;
+  } catch (error) {
+    return credentials.rejectWithValue(error.message);
+  }
+});
+
+const logIn = createAsyncThunk('auth/login', async credentials => {
+  try {
+    const { data } = await axios.post('/users/login', credentials);
+    token.set(data.token);
+    console.log(data);
+    return data;
+  } catch (error) {
+    return credentials.rejectWithValue(error.message);
+  }
+});
+
+const logOut = createAsyncThunk('auth/logout', async () => {
+  try {
+    await axios.post('/users/logout');
+    token.unset();
+  } catch (error) {
+    return error.message;
+  }
+});
+
+const fetchCurrentUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    if (persistedToken === null) {
+      return;
+    }
+    token.set(persistedToken);
+    try {
+      const { data } = await axios.get('/users/current');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -26,25 +62,5 @@ const register = createAsyncThunk(
   }
 );
 
-const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
-  try {
-    const { data } = await axios.post('/users/login', credentials);
-    token.set(data.token);
-
-    return data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
-
-const logOut = createAsyncThunk('auth/logout', async thunkAPI => {
-  try {
-    await axios.post('/users/logout');
-    token.unset();
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
-
-const authOperations = { register, logIn, logOut };
+const authOperations = { register, logIn, logOut, fetchCurrentUser };
 export default authOperations;

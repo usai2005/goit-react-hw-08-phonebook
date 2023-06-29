@@ -1,28 +1,20 @@
 import { useState } from 'react';
-import {
-  // useSelector,
-  useDispatch,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import authOperations from '../../redux/auth/authOperations';
-// import { selectContacts } from '../../redux/selectors';
-// import { addContact } from '../../redux/operations';
 import css from './RegisterForm.module.css';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  //   const contacts = useSelector(selectContacts);
-  //   const dispatch = useDispatch();
 
   const handleChange = e => {
     const { name, value } = e.target;
 
     switch (name) {
       case 'username':
-        setUsername(value);
+        setName(value);
         break;
       case 'email':
         setEmail(value);
@@ -37,24 +29,13 @@ const RegisterForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // if (contacts.find(contact => contact.name === name)) {
-    //   onNameExists();
-    // } else {
-    dispatch(authOperations.register({ username, email, password }));
+    dispatch(authOperations.register({ name, email, password }));
 
     stateReset();
-    // }
   };
 
-  //   const onNameExists = () => {
-  //     alert(`${name} is already in contacts list`);
-
-  //     setName(name);
-  //     setPhone(phone);
-  //   };
-
   const stateReset = () => {
-    setUsername('');
+    setName('');
     setEmail('');
     setPassword('');
   };
@@ -65,7 +46,7 @@ const RegisterForm = () => {
       <input
         type="text"
         name="username"
-        value={username}
+        value={name}
         onChange={handleChange}
         id="form-Username"
         required
