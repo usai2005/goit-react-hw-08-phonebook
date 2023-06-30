@@ -4,7 +4,7 @@ import authOperations from './authOperations';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: { userName: null, email: null },
+    user: { name: null, email: null },
     token: null,
     isLoggedIn: false,
     isUserLoading: false,
@@ -22,13 +22,16 @@ const authSlice = createSlice({
       })
       .addCase(authOperations.register.rejected, (state, _) => {
         state.isUserLoading = false;
+        state.isLoggedIn = false;
       })
       .addCase(authOperations.logIn.pending, (state, _) => {
         state.isUserLoading = true;
+        state.isLoggedIn = false;
       })
       .addCase(authOperations.logIn.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
+        state.isUserLoading = false;
         state.isLoggedIn = true;
       })
       .addCase(authOperations.logIn.rejected, (state, _) => {
@@ -36,14 +39,17 @@ const authSlice = createSlice({
       })
       .addCase(authOperations.logOut.pending, (state, _) => {
         state.isUserLoading = true;
+        state.isLoggedIn = false;
       })
       .addCase(authOperations.logOut.fulfilled, state => {
-        state.user = { userName: null, email: null };
+        state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
+        state.isUserLoading = false;
       })
       .addCase(authOperations.logOut.rejected, (state, _) => {
         state.isUserLoading = false;
+        state.isLoggedIn = false;
       })
       .addCase(authOperations.fetchCurrentUser.pending, (state, _) => {
         state.isUserLoading = true;
@@ -55,6 +61,7 @@ const authSlice = createSlice({
       })
       .addCase(authOperations.fetchCurrentUser.rejected, (state, _) => {
         state.isUserLoading = false;
+        state.isLoggedIn = false;
       });
   },
 });

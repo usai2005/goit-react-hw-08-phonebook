@@ -8,7 +8,15 @@ const contactsSlice = createSlice({
     isLoading: false,
     error: null,
   },
-
+  reducers: {
+    reset: () => {
+      return {
+        contacts: [],
+        isLoading: false,
+        error: null,
+      };
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, state => {
@@ -20,7 +28,6 @@ const contactsSlice = createSlice({
         state.error = null;
         state.contacts = payload;
         state.token = payload.token;
-        console.log(payload);
       })
 
       .addCase(fetchContacts.rejected, (state, { payload }) => {
@@ -55,7 +62,6 @@ const contactsSlice = createSlice({
         );
         state.contacts.splice(index, 1);
       })
-
       .addCase(deleteContact.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;

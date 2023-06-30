@@ -69,6 +69,7 @@ const RegisterForm = () => {
         value={password}
         onChange={handleChange}
         id="form-password"
+        autoComplete="on"
         required
       />
 

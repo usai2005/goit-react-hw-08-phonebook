@@ -23,16 +23,16 @@ const LoginForm = () => {
     }
   };
 
+  const stateReset = () => {
+    setEmail('');
+    setPassword('');
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(authOperations.logIn({ email, password }));
 
     stateReset();
-
-    const stateReset = () => {
-      setEmail('');
-      setPassword('');
-    };
   };
 
   return (
@@ -54,6 +54,7 @@ const LoginForm = () => {
         value={password}
         onChange={handleChange}
         id="form-password"
+        autoComplete="on"
         required
       />
 

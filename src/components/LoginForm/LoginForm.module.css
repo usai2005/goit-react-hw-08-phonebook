@@ -25,8 +25,6 @@
 
     font-size: 18px;
     font-weight: 500;
-
-    background-color: #e8f0fe;
     
     cursor: pointer;
 
@@ -44,14 +42,21 @@
 .form__button {
     width: 150px;
     height: 26px;
+
+    margin: 0 auto;
+
     font-size: 16px;
     font-weight: 500;
     text-transform: capitalize;
+
     cursor: pointer;
+
     color: #08888d;
     background-color: #dcf4f5;
+
     border: 2px solid #78f1f5;
     border-radius: 5px;
+
     box-shadow: 1px 1px 4px rgba(0, 0 ,0, 0.2);
 }
 
