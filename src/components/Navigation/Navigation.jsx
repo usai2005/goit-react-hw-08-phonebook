@@ -8,7 +8,7 @@ const Navigation = () => {
           <StyledNavLink to="/">Home</StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/phonebook">Phonebook</StyledNavLink>
+          <StyledNavLink to="/contacts">Phonebook</StyledNavLink>
         </li>
       </List>
     </nav>

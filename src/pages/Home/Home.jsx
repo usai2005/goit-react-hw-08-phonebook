@@ -18,18 +18,18 @@ const Home = () => {
       {!isLoggedIn ? (
         <List>
           <li>
-            <p>Please</p>
+            <Text>Please</Text>
             <StyledNavLink to="/register">Register</StyledNavLink>
           </li>
           <li>
-            <p>or</p>
+            <Text>or</Text>
             <StyledNavLink to="/login">log In</StyledNavLink>
           </li>
         </List>
       ) : (
         <LinkContainer>
           <Text>Your</Text>
-          <StyledNavLink to="/phoneBook">Phonebook</StyledNavLink>
+          <StyledNavLink to="/contacts">Phonebook</StyledNavLink>
         </LinkContainer>
       )}
     </Container>
